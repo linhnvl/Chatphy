@@ -5,10 +5,9 @@ class GiphyService
   end
 
   def call!
-    url = "https://api.giphy.com/v1/gifs/search?api_key=#{@giphy_token}&q=#{@q_string}&limit=15"
+    url = "https://api.giphy.com/v1/gifs/search?api_key=#{@giphy_token}&q=#{@q_string}&limit=1"
     response = HTTParty.get(url)
-    random_number = rand(0..14)
-    data = response["data"][random_number]
+    data = response["data"][0]
     gif_id = data["id"]
     gif_url = data["images"]["downsized_large"]["url"]
     IO.copy_stream(open(gif_url), "./public/images/#{gif_id}.gif")
